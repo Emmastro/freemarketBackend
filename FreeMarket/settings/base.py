@@ -1,6 +1,4 @@
 import os
-#https://github.com/Emmastro/ALAMAU.git
-#git pull https://github.com/Emmastro/ALAMAU.git
 from django.core.wsgi import get_wsgi_application
 import django_heroku
 
@@ -41,7 +39,6 @@ INSTALLED_APPS = [
     'Inbox',
     'django.contrib.admin',
     #'django.contrib.postgres',
-    'Calendar',
     'Help',
     'rest_framework',
     'corsheaders',
@@ -64,7 +61,7 @@ MIDDLEWARE = [
     #'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
-ROOT_URLCONF = 'ALAMAU.urls'
+ROOT_URLCONF = 'FreeMarket.urls'
 
 TEMPLATES = [
     {
@@ -94,8 +91,8 @@ TEMPLATES = [
 #EMAIL_HOST_PASSWORD = 'redolaemma##123' 
 
 
-AWS_ACCESS_KEY_ID = 'AKIAI72B7AAK5G4DGNHA'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
 AWS_SES_REGION_NAME = 'us-east-1'
 AWS_SES_REGION_ENDPOINT = 'email-smtp.us-east-1.amazonaws.com'
 
@@ -104,14 +101,14 @@ EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
 EMAIL_PORT = 465
 
 EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
-EMAIL_HOST_USER = 'AKIATD722YS2ZDTLX7IL' #'ses-smtp-user.20190421-211453'
-EMAIL_HOST_PASSWORD = "BKDYLZsl0+GIUl6zGXgHHFKjyr/RfBofOgd3e3rxGFQH"
-DEFAULT_FROM_EMAIL = 'emurairi@alamau.org'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ""
+DEFAULT_FROM_EMAIL = ''
 
 EMAIL_USE_SSL = True
 #EMAIL_USE_TLS = True
 
-WSGI_APPLICATION = 'ALAMAU.wsgi.application'
+WSGI_APPLICATION = 'FreeMarket.wsgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -160,12 +157,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '8fb+7(lo=syt)u16-lo$2_5f*$7i(o(ufy2ym
 COMPRESS_ENABLED = True
 COMPRESS_OFFLINE = True
 
-# ** Side bar **
-SIDEBAR_MENU_TEXTS = ['Home']
-SIDEBAR_MENU_URLS = ['home']
-
 # Site constant
-SITE_TITLE = 'African Leadership Academy Model African Union'
+SITE_TITLE = 'Free Market'
 
 PUSH_NOTIFICATIONS_SETTINGS = {
         "FCM_API_KEY": "AIzaSyBdxS0kL7mvEmki_hk4p0Z3J1lYQ66BDSs", # Fire cloud messaging for Google
@@ -176,7 +169,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = (
        'http://localhost:3000',
-       'https://alamaufrontend.herokuapp.com',
+       'https://freemarket.herokuapp.com',
 )
 
 
@@ -197,29 +190,4 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-}
-
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=150),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=150),
-    'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION': True,
-
-    'ALGORITHM': 'HS256',
-    'VERIFYING_KEY': None,
-    'AUDIENCE': None,
-    'ISSUER': None,
-
-    'AUTH_HEADER_TYPES': ('Bearer',),
-    'USER_ID_FIELD': 'id',
-    'USER_ID_CLAIM': 'user_id',
-
-    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
-    'TOKEN_TYPE_CLAIM': 'token_type',
-
-    'JTI_CLAIM': 'jti',
-
-    'SLIDING_TOKEN_LIFETIME': timedelta(days=150),
-    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=150),
-    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
 }
