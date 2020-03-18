@@ -1,0 +1,28 @@
+# Delete all migration files
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "*/migrations/*.pyc"  -delete
+
+# Reset Git cache
+git rm -r --cached .
+
+# Display heroku logs
+heroku logs --app=creativeart --tail
+
+
+
+Make the sign up page load in the main AJAX page (manage the differences in the assets used)
+Generate a PWA without the URL bar --> Get a Google developer account 
+
+
+
+delegate 1 is from brookhouse school, airport pick up: time, name of person of person picking them up at the airport
+
+time bus is leaving/ bus number/ chaperone name/ destination/ expexted return time to the bus
+
+cultural night at ala campus: bus leaving time, bus number, time when one is expected to be back on the bus
+
+leaving indaba to airport: bus leaving time, bus number
+
+replace people by updates, keep calendar, user profile, bus schedule, events
+
+description, venue, time, expected dress code

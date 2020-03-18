@@ -1,0 +1,209 @@
+# heroku git:remote -a ALAMAU
+# heroku config:set SECRET_KEY="8fb+7(%i=syt)u16-!_$2_5f*$7i(o(ufy2ymyh!ql8&9gvhtw"
+# Linux --> SECRET_KEY='8fb+7(%i=syt)u16-lo$2_5f*$7i(o(ufy2ymyh22ql8&9gvhtw'
+# heroku run python manage.py migrate
+# heroku run python manage.py initDataLocations
+# heroku run python manage.py importBooks Datas.xlsx covers
+# heroku run python manage.py demoUser
+# ALL : 
+# Jet local token: 1cb5302f-6bbe-46e0-ad48-fbdceb477a29
+# Heroku jet token : 87f61619-57c5-4835-b564-b46240f88621
+
+python manage.py migrate
+python manage.py demoUser
+python manage.py initDataLocations
+python manage.py importBooks Datas.xlsx covers 0 350
+
+# heroku config:set 
+
+# heroku config:set AWS_ACCESS_KEY_ID='AKIATD722YS22J4JT4OI'
+# heroku config:set AWS_SECRET_ACCESS_KEY='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'
+
+--allow-unrelated-histories
+
+
+
+# ********************** AMAZON Configuration ***************************
+
+# Update linux packages
+sudo apt-get update
+
+# Install python ...
+sudo apt-get install python3-pip python3-dev libpq-dev postgresql postgresql-contrib nginx
+
+sudo pip install django gunicorn psycopg2
+sudo pip install -r requirements.txt
+
+# Solve error ***
+"[Service]\nExecStartPost=/bin/sleep 0.1\n" > /etc/systemd/system/nginx.service.d/override.conf
+
+
+# Delete Database with connections
+ALTER DATABASE mydb CONNECTION LIMIT 0;
+SELECT pg_terminate_backend(pid)
+FROM pg_stat_activity
+WHERE datname = 'ALAMAU';
+DROP DATABASE ALAMAU;
+
+# Rename
+sudo -u postgres psql
+ALTER DATABASE mydb CONNECTION LIMIT 0;
+SELECT pg_terminate_backend(pid)
+FROM pg_stat_activity
+WHERE datname = 'ALAMAU';
+ALTER DATABASE ALAMAU RENAME TO ALAMAU1;
+\q
+
+#Rename Back
+sudo -u postgres psql
+ALTER DATABASE mydb CONNECTION LIMIT 0;
+SELECT pg_terminate_backend(pid)
+FROM pg_stat_activity
+WHERE datname = 'ALAMAU';
+ALTER DATABASE ALAMAU1 RENAME TO ALAMAU;
+\q
+
+
+# REinitialise Database
+
+sudo -u postgres psql
+ALTER DATABASE mydb CONNECTION LIMIT 0;
+SELECT pg_terminate_backend(pid)
+FROM pg_stat_activity
+WHERE datname = 'ALAMAU';
+DROP DATABASE ALAMAU;
+CREATE DATABASE ALAMAU;
+
+# Lunch Postgresql Consol
+
+sudo -u postgres psql
+
+#Create and setup the database
+sudo -u postgres psql
+create database ALAMAU;
+create user emmamurairi with password 'redolaemma!!123123';
+alter role emmamurairi set client_encoding to 'utf8';
+alter role emmamurairi set default_transaction_isolation to 'read committed';
+grant all privileges on database ALAMAU to emmamurairi;
+\q
+
+# Create tree gram extention
+sudo -u postgres psql
+CREATE EXTENSION pg_trgm;
+\q
+
+# prepare the virtual environnement
+sudo -H pip3 install virtualenv
+
+# prepare the project folder
+mkdir ~/africanlibraires
+
+#Open the project folder
+cd ~/africanlibraires
+
+#Create the virtual environnement
+virtualenv venv
+
+source venv/bin/activate
+#Activate the virtual environnement
+
+gunicorn --bind 0.0.0.0:8000 ALAMAU.wsgi:application
+
+gunicorn --reload ALAMAU.wsgi:application
+
+#kill gunicorn
+pkill -f gunicorn
+
+sudo nano /etc/systemd/system/gunicorn.service
+sudo vim /etc/systemd/system/gunicorn.service
+
+[Unit]
+Description=gunicorn daemon
+After=network.target
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/ALAMAU
+ExecStart=/home/ubuntu/ALAMAU/venv/bin/gunicorn --workers 3 --bind unix:/home/ubuntu/ALAMAU/ALAMAU.sock ALAMAU.wsgi:application
+[Install]
+WantedBy=multi-user.target
+
+
+ESC :wq
+
+sudo systemctl daemon-reload
+sudo systemctl start gunicorn
+sudo systemctl enable gunicorn
+
+sudo vim /etc/nginx/sites-available/ALAMAU
+
+
+i'
+
+server {
+	  proxy_connect_timeout       1000;
+	  proxy_send_timeout          1000;
+	  proxy_read_timeout          1000;
+	  send_timeout                1000;
+
+	listen 80;
+	server_name ec2-35-175-148-162.compute-1.amazonaws.com;
+	
+	location = /favicon.ico { access_log off; log_not_found off; }
+
+	location /static/ {
+        root /home/ubuntu/ALAMAU/ALAMAU;
+    }
+	
+
+    location /media/  {
+        root /home/ubuntu/ALAMAU/media;
+    }
+
+  location / {
+      include proxy_params;
+      proxy_pass http://unix:/home/ubuntu/ALAMAU/ALAMAU.sock;
+  }
+}
+
+ESC :wq 
+
+vim ALAMAU/settings/base.py
+
+
+sudo ln -s /etc/nginx/sites-available/ALAMAU /etc/nginx/sites-enabled
+sudo nginx -t
+sudo rm /etc/nginx/sites-enabled/default
+sudo service nginx restart
+
+sudo vim ALAMAU/settings/base.py
+
+#Track errors
+sudo tail -f /var/log/nginx/error.log
+
+# clean cash
+python manage.py clean_pyc
+
+git fetch --all
+git reset --hard origin/master
+
+
+#Restart server
+sudo systemctl stop gunicorn
+
+sudo systemctl daemon-reload
+sudo systemctl restart gunicorn
+sudo systemctl enable gunicorn
+
+sudo systemctl start gunicorn
+
+sudo systemctl status gunicorn
+
+#Cancel migrations
+
+python manage.py migrate --fake core Main zero
+python manage.py migrate --fake core Schools zero
+python manage.py migrate --fake core Messaging zero
+python manage.py migrate --fake core Administration zero
+python manage.py migrate --fake core Accounts zero
+python manage.py migrate --fake core Team zero
