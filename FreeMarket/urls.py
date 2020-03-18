@@ -16,7 +16,6 @@ urlpatterns = [
 	path('api/', include('Main.urls')),
     path('api/', include('Accounts.urls')),
     path('admin/', admin.site.urls),
-    path('calendar/', include('Calendar.urls')),
     path('inbox/', include('Inbox.urls')),
     path('help/', include('Help.urls')),    
     #path('token-auth/', obtain_jwt_token),
@@ -25,10 +24,5 @@ urlpatterns = [
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-#urlpatterns += static("", document_root = settings.STATIC_ROOT  + '/js/firebase-messaging-sw.js')
-#urlpatterns+=static(r'^static/(?P<path>.*)$', document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-#handler404 = 'ALAMAU.views.my_custom_page_not_found_view'
-# the custom 404 hadler make a CSRF Error on production
 

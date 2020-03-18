@@ -111,7 +111,7 @@ DEFAULT_FROM_EMAIL = 'emurairi@alamau.org'
 EMAIL_USE_SSL = True
 #EMAIL_USE_TLS = True
 
-WSGI_APPLICATION = 'FreeMarket.wsgi.application'
+WSGI_APPLICATION = 'ALAMAU.wsgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [
     {

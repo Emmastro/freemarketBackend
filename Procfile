@@ -1,1 +1,1 @@
-web: gunicorn ALAMAU.wsgi --log-file -
+web: gunicorn FreeMarket.wsgi --log-file -

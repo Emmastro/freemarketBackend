@@ -5,18 +5,6 @@ from .base import*
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Connect to production database
-
-"""DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ALAMAU',
-        'USER': 'emmamurairi',
-        'PASSWORD': 'redolaemma!!123123',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}"""
 
 DATABASES = {
    'default': {
@@ -52,5 +40,5 @@ django_heroku.settings(locals())
 DEBUG = True
 
 CORS_ORIGIN_WHITELIST = (
-       'https://alamaufrontend.herokuapp.com',
+       'https://freemarketfrontend.herokuapp.com',
 )
