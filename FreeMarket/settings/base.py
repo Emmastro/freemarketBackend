@@ -32,9 +32,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize', # Make content look more human
-    #'sorl.thumbnail', # For optimisation 
+    #'sorl.thumbnail', # For optimisation
     #"compressor", # Compress css and js for optimisation
-    'Accounts',    
+    'Accounts',
     'Main',
     'Inbox',
     'django.contrib.admin',
@@ -57,7 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+
     #'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
@@ -77,18 +77,18 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
             ],
-        
+
         },
     },
 ]
 
 # Send with African Libraries mail address
 
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
-#EMAIL_USE_TLS = True 
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_USE_TLS = True
 #EMAIL_HOST = 'smtp.gmail.com'
-#EMAIL_HOST_USER = 'emmamurairi@gmail.com' 
-#EMAIL_HOST_PASSWORD = 'redolaemma##123' 
+#EMAIL_HOST_USER = 'emmamurairi@gmail.com'
+#EMAIL_HOST_PASSWORD = 'redolaemma##123'
 
 
 AWS_ACCESS_KEY_ID = ''
@@ -180,14 +180,17 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
 }'''
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
-}
+#REST_FRAMEWORK = {
+#    'DEFAULT_AUTHENTICATION_CLASSES': [
+#        'rest_framework_simplejwt.authentication.JWTAuthentication',
+#    ],
+#}
+
+
+AUTH_USER_MODEL = 'Accounts.User'
