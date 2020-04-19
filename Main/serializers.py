@@ -11,7 +11,7 @@ class SellerSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
     class Meta:
         model = Seller
-        fields = ('user', 'category')
+        fields = ('user')
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
